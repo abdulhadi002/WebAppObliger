@@ -56,6 +56,7 @@ nav ul li{
 .all-projects p {
   margin: 0;
   flex-grow: 1;
+  color: black;
 }
 
 .all-projects a {
