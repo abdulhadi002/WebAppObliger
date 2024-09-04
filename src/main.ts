@@ -44,10 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
     event.preventDefault();
 
     const title = (document.getElementById('name') as HTMLInputElement).value;
-    const details = (document.getElementById('description') as HTMLTextAreaElement).value;
+    const details = ((event.target as HTMLFormElement).elements.namedItem('description') as HTMLTextAreaElement)?.value;
     const imageInput = document.getElementById('projectImageInput') as HTMLInputElement;
     const imageFile = imageInput.files?.[0];
-
     if (imageFile) {
       const reader = new FileReader();
       reader.onload = () => {
