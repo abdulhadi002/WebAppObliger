@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };*/
 
   const fetchDataFromServer = async () => {
-    const response = await fetch("http://localhost:5173/json", {
+    const response = await fetch("http://localhost:4000/json", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

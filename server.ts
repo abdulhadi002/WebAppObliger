@@ -18,7 +18,7 @@ app.use("/*", cors());
 app.use("/statics/*", serveStatic({root: "./"}));
 
 app.get("/json", async (c) => {
-    const data = await readFile("./data.json", "utf-8");
+    const data = await readFile("./src/ProjectInfo.json", "utf-8");
     return c.json(JSON.parse(data));
 });
 
