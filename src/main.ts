@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const projectForm = document.getElementById('create-project-form') as HTMLFormElement;
   let projects: Project[] = [];
 
-  const loadProjects = async () => {
+  /*const loadProjects = async () => {
     try {
       const response = await fetch('ProjectInfo.json');
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -20,6 +20,26 @@ document.addEventListener('DOMContentLoaded', () => {
       projects.forEach(proj => displayProject(proj));
     } catch (error) {
       console.error('Error fetching projects:', error);
+    }
+  };*/
+
+  const fetchDataFromServer = async () => {
+    const response = await fetch("http://localhost:5173/json", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+  
+    console.log(result);
+  
+    const id = document.getElementById("json");
+    if (!id) return;
+    for (const habit of result) {
+      const element = document.createElement("p");
+      element.textContent = habit.title;
+      id.appendChild(element);
     }
   };
 
@@ -66,5 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  loadProjects();
+  /*loadProjects();*/
+  fetchDataFromServer();
 });
