@@ -1,10 +1,5 @@
 {
-    "project": [
-      {
-        "id": 1,
-        "project-name": "Web Development Project",
-        "description": "A project to develop a responsive website.",
-        "Image-scr": "Image"
-      }
-    ]
-  }
+  "project": [
+    
+  ]
+}
