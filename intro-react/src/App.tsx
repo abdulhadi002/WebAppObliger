@@ -33,7 +33,7 @@ import Streaks from './Streaks'
   )
 }
 
-export default App*/
+export default App
 
 function App() {
   console.log('Console log i App')
@@ -46,9 +46,29 @@ function App() {
     <main>
       <h1>Welcome to my project!</h1>
       <h2>Your name is {name}. Your age are {age} and your hobby is {hobby}</h2>
-      <Streaks />
+      <Streaks streak={100}/>
     </main>
   );
 }
 
-export default App;
+export default App;*/
+import Header from './Header';
+
+function App() {
+  const student = 'Abdulhadi Abdo'
+  const degree = 'Bachelor IT'
+  const points = 180
+  const experienceOne = 'Web develeper'
+  const experienceTwo = 'Website for customer Y'
+  const email = 'student@hiof.no'
+
+  return (
+    <div>
+      <Header student={student} degree={degree} points={points} />
+      <Experiences experienceOne={experienceOne} experienceTwo={experienceTwo} />
+      <Contact email={email} />
+    </div>
+  )
+}
+
+export default App
