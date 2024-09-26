@@ -1,43 +1,113 @@
-nav{
+/* Root container styling */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Header and navigation */
+nav {
   display: flex;
   justify-content: flex-end;
   border: 1px solid;
   border-color: aqua;
+  padding: 0.5rem;
 }
 
-nav ul{
+nav ul {
   display: flex;
-}
-
-nav ul li{
-  padding: 1rem;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
-.new-article{
-  display: flex;
-  align-items: center;
-}
-
-.new-article figure img {
-  width: 100%;
-}
-
-.show-all-button {
-  float: right;
-}
-
-.h2 {
+nav ul li {
   padding: 1rem;
 }
 
-/* Articles */
+nav ul li a {
+  color: blue;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Main section */
+main {
+  padding: 2rem 0;
+}
+
+h1, h2 {
+  padding: 1rem;
+  font-size: 2rem;
+  text-align: left;
+}
+
+/* New project section */
+.new-article {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.new-article figure img {
+  width: 400px;
+  height: auto;
+  object-fit: cover;
+}
+
+#name, #description, #projectImageInput {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#submit-button {
+  padding: 0.5rem 1rem;
+  background-color: lightgray;
+  border: 1px solid gray;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+}
+
+#submit-button:hover {
+  background-color: gray;
+  color: white;
+}
+
+/* Button to show all projects */
+button.show-all-button {
+  float: right;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: lightgray;
+  border: 1px solid gray;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button.show-all-button:hover {
+  background-color: gray;
+  color: white;
+}
+
+/* Project list and articles */
 .all-projects {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   border: 1px solid;
   border-color: aqua;
+  padding: 1rem;
 }
 
 .all-projects article {
@@ -51,6 +121,7 @@ nav ul li{
   margin-right: 1rem;
   width: 130px;
   height: 100px;
+  object-fit: cover;
 }
 
 .all-projects p {
@@ -62,4 +133,18 @@ nav ul li{
 .all-projects a {
   margin-left: auto;
   padding: 1rem;
+  color: purple;
+  text-decoration: none;
+}
+
+.all-projects a:hover {
+  text-decoration: underline;
+}
+
+/* Headings */
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 1rem;
 }

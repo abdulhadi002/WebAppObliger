@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface ProjectProps {
+type ProjectProps = {
   title: string;
   details: string;
   imageUrl: string;
-}
+};
 
 const Project: React.FC<ProjectProps> = ({ title, details, imageUrl }) => {
   return (

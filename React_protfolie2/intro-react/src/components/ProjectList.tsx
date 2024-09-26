@@ -1,15 +1,15 @@
 import React from 'react';
 import Project from './Project';
 
-interface Project {
+type Project = {
   title: string;
   details: string;
   imageUrl: string;
-}
+};
 
-interface ProjectListProps {
+type ProjectListProps = {
   projects: Project[];
-}
+};
 
 const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
   return (

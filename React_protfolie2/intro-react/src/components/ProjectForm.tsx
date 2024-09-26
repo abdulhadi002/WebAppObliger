@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-interface ProjectFormProps {
+type ProjectFormProps = {
   onAddProject: (project: { title: string; details: string; imageUrl: string }) => void;
-}
+};
 
 const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
   const [title, setTitle] = useState('');
@@ -20,22 +20,31 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form id="create-project-form" onSubmit={handleSubmit}>
+      <button type="submit" id="submit-button">Create</button><br />
+      <label htmlFor="name" id="name-label">Name for your project</label><br />
       <input
         type="text"
+        name="name"
+        id="name"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Project Title"
         required
-      />
+      /><br />
+      <label htmlFor="description" id="description-label">Description</label><br />
       <textarea
+        name="description"
+        id="description"
         value={details}
         onChange={(e) => setDetails(e.target.value)}
         placeholder="Project Details"
         required
-      ></textarea>
+      ></textarea><br />
+      <label htmlFor="projectImageInput" id="image-label">Select an image:</label><br />
       <input
         type="file"
+        id="projectImageInput"
         accept="image/*"
         onChange={(e) => {
           const file = e.target.files?.[0];
@@ -47,8 +56,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
             reader.readAsDataURL(file);
           }
         }}
-      />
-      <button type="submit">Add Project</button>
+      /><br />
     </form>
   );
 };

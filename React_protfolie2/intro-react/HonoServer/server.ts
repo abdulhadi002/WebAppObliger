@@ -4,13 +4,6 @@ import { readFile, writeFile } from "node:fs/promises";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { cors } from "hono/cors";
 
-interface Project {
-  id: number;
-  project_name: string;
-  description: string;
-  image_src: string;
-}
-
 const app = new Hono();
 
 app.use("/*", cors());
