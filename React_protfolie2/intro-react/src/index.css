@@ -1,4 +1,13 @@
-/* Root container styling */
+:root {
+  --button-bg-color: lightgray;
+  --button-border-color: gray;
+  --button-text-color: black;
+  --button-hover-bg-color: gray;
+  --button-hover-text-color: white;
+  --button-padding: 0.5rem 1rem;
+  --button-border-radius: 4px;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -6,59 +15,56 @@
   text-align: center;
 }
 
-/* Header and navigation */
 nav {
   display: flex;
   justify-content: flex-end;
   border: 1px solid;
   border-color: aqua;
   padding: 0.5rem;
+
+  ul {
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 1rem;
+
+      a {
+        color: blue;
+        text-decoration: none;
+        font-size: 1.2rem;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
 }
 
-nav ul {
-  display: flex;
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-nav ul li {
-  padding: 1rem;
-}
-
-nav ul li a {
-  color: blue;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-
-nav ul li a:hover {
-  text-decoration: underline;
-}
-
-/* Main section */
 main {
   padding: 2rem 0;
+
+  h1, h2 {
+    padding: 1rem;
+    font-size: 2rem;
+    text-align: left;
+  }
 }
 
-h1, h2 {
-  padding: 1rem;
-  font-size: 2rem;
-  text-align: left;
-}
-
-/* New project section */
 .new-article {
   display: flex;
   align-items: flex-start;
   gap: 2rem;
-}
 
-.new-article figure img {
-  width: 400px;
-  height: auto;
-  object-fit: cover;
+  figure img {
+    width: 400px;
+    height: auto;
+    object-fit: cover;
+  }
 }
 
 #name, #description, #projectImageInput {
@@ -66,41 +72,71 @@ h1, h2 {
   margin-bottom: 1rem;
   padding: 0.5rem;
   width: 300px;
-  border: 1px solid #ccc;
+  border: 1px solid aqua;
   border-radius: 4px;
 }
 
-#submit-button {
-  padding: 0.5rem 1rem;
-  background-color: lightgray;
-  border: 1px solid gray;
-  cursor: pointer;
-  border-radius: 4px;
+#name-label {
   display: flex;
 }
 
-#submit-button:hover {
-  background-color: gray;
-  color: white;
+#description-label {
+  display: flex;
 }
 
-/* Button to show all projects */
-button.show-all-button {
-  float: right;
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: lightgray;
-  border: 1px solid gray;
+#image-label {
+  display: flex;
+}
+
+
+button {
+  padding: var(--button-padding);
+  background-color: var(--button-bg-color);
+  border: 1px solid var(--button-border-color);
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: var(--button-border-radius);
+  color: var(--button-text-color);
+  display: flex;
+  align-items: center;
 }
 
-button.show-all-button:hover {
-  background-color: gray;
-  color: white;
+button:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-hover-text-color);
 }
 
-/* Project list and articles */
+#submit-button {
+  padding: var(--button-padding);
+  background-color: var(--button-bg-color);
+  border: 1px solid var(--button-border-color);
+  cursor: pointer;
+  border-radius: var(--button-border-radius);
+  color: var(--button-text-color);
+  display: flex;
+  align-items: center;
+}
+
+#submit-button:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-hover-text-color);
+}
+
+.showall {
+  float: inline-end;
+  margin-top: 1rem;
+  padding: var(--button-padding);
+  background-color: var(--button-bg-color);
+  border: 1px solid var(--button-border-color);
+  cursor: pointer;
+  border-radius: var(--button-border-radius);
+  color: var(--button-text-color);
+}
+
+.showall:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-hover-text-color);
+}
+
 .all-projects {
   display: flex;
   flex-direction: column;
@@ -108,43 +144,42 @@ button.show-all-button:hover {
   border: 1px solid;
   border-color: aqua;
   padding: 1rem;
-}
 
-.all-projects article {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #ddd;
-  padding: 1rem 0;
-}
+  article {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
 
-.all-projects img {
-  margin-right: 1rem;
-  width: 130px;
-  height: 100px;
-  object-fit: cover;
-}
+    img {
+      margin-right: 1rem;
+      width: 130px;
+      height: 100px;
+      object-fit: cover;
+    }
 
-.all-projects p {
-  margin: 0;
-  flex-grow: 1;
-  color: black;
-}
+    p {
+      margin: 0;
+      flex-grow: 1;
+      color: black;
+    }
 
-.all-projects a {
-  margin-left: auto;
-  padding: 1rem;
-  color: purple;
-  text-decoration: none;
-}
+    a {
+      margin-left: auto;
+      padding: 1rem;
+      color: purple;
+      text-decoration: none;
 
-.all-projects a:hover {
-  text-decoration: underline;
-}
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 
-/* Headings */
-h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: left;
-  margin-bottom: 1rem;
+  h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 1rem;
+  }
 }

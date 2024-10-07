@@ -42,6 +42,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
         required
       ></textarea><br />
       <label htmlFor="projectImageInput" id="image-label">Select an image:</label><br />
+      <button className='showall'>Show All Projects</button>
       <input
         type="file"
         id="projectImageInput"

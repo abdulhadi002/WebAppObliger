@@ -65,9 +65,9 @@ const App: React.FC = () => {
     <>
       <h1>Project Manager</h1>
       <ProjectForm onAddProject={addProject} />
-      <div className="all-projects">
+      <section className="all-projects">
         <ProjectList projects={projects} />
-      </div>
+      </section>
     </>
   );
 };
