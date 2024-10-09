@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProjectList from './components/ProjectList';
 import ProjectForm from './components/ProjectForm';
+import { z } from 'zod';
 
 type Project = {
   title: string;
@@ -8,6 +9,13 @@ type Project = {
   imageUrl: string;
   publishedAt: string;
 };
+
+const ZodSkjema = z.object({
+  project_name: z.string(),
+  decsription: z.string(),
+  image_src: z.string().url(),
+  publishedAt: z.string().datetime(),
+});
 
 const App: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
