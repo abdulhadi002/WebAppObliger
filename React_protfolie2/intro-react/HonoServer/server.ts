@@ -17,7 +17,7 @@ app.get("/json", async (c) => {
 
 app.post("/json", async (c) => {
   try {
-    const newProject: Project = await c.req.json();
+    const newProject = await c.req.json();
     const data = await readFile("./HonoServer/ProjectInfo.json", "utf-8");
     const projects = JSON.parse(data).project;
 
