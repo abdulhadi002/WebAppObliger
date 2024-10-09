@@ -13,7 +13,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (title && details) {
-      const publishedAt = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
+      const publishedAt = format(new Date(), "'Date: 'yyyy-MM-dd' Time: 'HH:mm:ss");
       onAddProject({ title, details, imageUrl, publishedAt});
       setTitle('');
       setDetails('');

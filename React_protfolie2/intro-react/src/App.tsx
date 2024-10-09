@@ -6,6 +6,7 @@ type Project = {
   title: string;
   details: string;
   imageUrl: string;
+  publishedAt: string;
 };
 
 const App: React.FC = () => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
           title: proj.project_name,
           details: proj.description,
           imageUrl: proj.image_src || 'https://via.placeholder.com/100x100',
+          publishedAt: proj.publishedAt,
         }));
 
         setProjects(fetchedProjects);
@@ -48,6 +50,7 @@ const App: React.FC = () => {
           project_name: newProject.title,
           description: newProject.details,
           image_src: newProject.imageUrl,
+          publishedAt: newProject.publishedAt,
         }),
       });
 
