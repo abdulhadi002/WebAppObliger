@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProjectList from './components/ProjectList';
 import ProjectForm from './components/ProjectForm';
 import { z } from 'zod';
+import PortfolioPage from './PortfolioPage';
 
 type Project = {
   title: string;
@@ -10,12 +11,14 @@ type Project = {
   publishedAt: string;
 };
 
-const ZodSkjema = z.object({
+const ZodSchema = z.object({
   project_name: z.string(),
   decsription: z.string(),
   image_src: z.string().url(),
   publishedAt: z.string().datetime(),
 });
+
+z.array(ZodSchema);
 
 const App: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -74,11 +77,12 @@ const App: React.FC = () => {
 
   return (
     <>
-      <h1>Project Manager</h1>
+      {/*<h1>Project Manager</h1>
       <ProjectForm onAddProject={addProject} />
       <section className="all-projects">
         <ProjectList projects={projects} />
-      </section>
+      </section>*/}
+      <PortfolioPage />
     </>
   );
 };
