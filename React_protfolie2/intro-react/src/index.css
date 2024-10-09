@@ -76,18 +76,9 @@ main {
   border-radius: 4px;
 }
 
-#name-label {
+#name-label, #description-label, #image-label {
   display: flex;
 }
-
-#description-label {
-  display: flex;
-}
-
-#image-label {
-  display: flex;
-}
-
 
 button {
   padding: var(--button-padding);
@@ -98,11 +89,11 @@ button {
   color: var(--button-text-color);
   display: flex;
   align-items: center;
-}
 
-button:hover {
-  background-color: var(--button-hover-bg-color);
-  color: var(--button-hover-text-color);
+  &:hover {
+    background-color: var(--button-hover-bg-color);
+    color: var(--button-hover-text-color);
+  }
 }
 
 #submit-button {
@@ -114,11 +105,11 @@ button:hover {
   color: var(--button-text-color);
   display: flex;
   align-items: center;
-}
 
-#submit-button:hover {
-  background-color: var(--button-hover-bg-color);
-  color: var(--button-hover-text-color);
+  &:hover {
+    background-color: var(--button-hover-bg-color);
+    color: var(--button-hover-text-color);
+  }
 }
 
 .showall {
@@ -130,11 +121,11 @@ button:hover {
   cursor: pointer;
   border-radius: var(--button-border-radius);
   color: var(--button-text-color);
-}
 
-.showall:hover {
-  background-color: var(--button-hover-bg-color);
-  color: var(--button-hover-text-color);
+  &:hover {
+    background-color: var(--button-hover-bg-color);
+    color: var(--button-hover-text-color);
+  }
 }
 
 .all-projects {

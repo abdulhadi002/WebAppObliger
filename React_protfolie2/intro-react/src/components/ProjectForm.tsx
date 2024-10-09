@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { format } from 'date-fns';
 
 type ProjectFormProps = {
-  onAddProject: (project: { title: string; details: string; imageUrl: string }) => void;
+  onAddProject: (project: { title: string; details: string; imageUrl: string; publishedAt: string}) => void;
 };
 
 const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
@@ -12,7 +13,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (title && details) {
-      onAddProject({ title, details, imageUrl });
+      const publishedAt = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
+      onAddProject({ title, details, imageUrl, publishedAt});
       setTitle('');
       setDetails('');
       setImageUrl('');

@@ -22,6 +22,7 @@ app.post("/json", async (c) => {
     const projects = JSON.parse(data).project;
 
     newProject.id = projects.length ? projects[projects.length - 1].id + 1 : 1;
+    newProject.publichedAt = newProject.publichedAt || new Date().toISOString();
     projects.push(newProject);
 
     await writeFile("./HonoServer/ProjectInfo.json", JSON.stringify({ project: projects }, null, 2));
