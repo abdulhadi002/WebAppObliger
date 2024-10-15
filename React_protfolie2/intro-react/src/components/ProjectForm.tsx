@@ -2,30 +2,46 @@ import React, { useState } from 'react';
 import { format } from 'date-fns';
 
 type ProjectFormProps = {
-  onAddProject: (project: { title: string; details: string; imageUrl: string; publishedAt: string}) => void;
+  onAddProject: (project: {
+    title: string;
+    details: string;
+    imageUrl: string;
+    publishedAt: string;
+    status: string;
+    tags: string;
+    isPublic: boolean;
+    link: string;
+  }) => void;
 };
 
 const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [status, setStatus] = useState('');
+  const [tags, setTags] = useState('');
+  const [isPublic, setIsPublic] = useState(false);
+  const [link, setLink] = useState('');
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (title && details) {
       const publishedAt = format(new Date(), "'Date: 'yyyy-MM-dd' Time: 'HH:mm:ss");
-      onAddProject({ title, details, imageUrl, publishedAt});
+      onAddProject({ title, details, imageUrl, publishedAt, status, tags, isPublic, link });
       setTitle('');
       setDetails('');
       setImageUrl('');
+      setStatus('');
+      setTags('');
+      setIsPublic(false);
+      setLink('');
     }
   };
 
   return (
     <section>
       <form id="create-project-form" onSubmit={handleSubmit}>
-        <button type="submit" id="submit-button">Create</button><br />
-        <label htmlFor="name" id="name-label">Name for your project</label><br />
+        <label htmlFor="name" id="name-label">Name for your project:</label><br />
         <input
           type="text"
           name="name"
@@ -35,7 +51,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
           placeholder="Project Title"
           required
         /><br />
-        <label htmlFor="description" id="description-label">Description</label><br />
+
+        <label htmlFor="description" id="description-label">Description:</label><br />
         <textarea
           name="description"
           id="description"
@@ -44,8 +61,47 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
           placeholder="Project Details"
           required
         ></textarea><br />
+
+        <label htmlFor="status" id="status-label">Status:</label><br />
+        <input
+          type="text"
+          name="status"
+          id="status"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          placeholder="e.g. inProgress, completed"
+        /><br />
+
+        <label htmlFor="tags" id="tags-label">Tags (comma separated):</label><br />
+        <input
+          type="text"
+          name="tags"
+          id="tags"
+          value={tags}
+          onChange={(e) => setTags(e.target.value)}
+          placeholder="e.g. Typescript, React"
+        /><br />
+
+        <label htmlFor="public" id="public-label">Public:</label>
+        <input
+          type="checkbox"
+          name="public"
+          id="public"
+          checked={isPublic}
+          onChange={(e) => setIsPublic(e.target.checked)}
+        /><br />
+
+        <label htmlFor="link" id="link-label">External Link:</label><br />
+        <input
+          type="url"
+          name="link"
+          id="link"
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+          placeholder="e.g. https://github.com/abdulhadi002/WebAppObliger.git"
+        /><br />
+
         <label htmlFor="projectImageInput" id="image-label">Select an image:</label><br />
-        <button className='showall'>Show All Projects</button>
         <input
           type="file"
           id="projectImageInput"
@@ -61,6 +117,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
             }
           }}
         /><br />
+
+        <button type="submit" id="submit-button">Create</button>
       </form>
     </section>
   );
