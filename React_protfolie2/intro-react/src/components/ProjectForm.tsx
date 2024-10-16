@@ -20,20 +20,21 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
   const [imageUrl, setImageUrl] = useState('');
   const [status, setStatus] = useState('');
   const [tags, setTags] = useState('');
-  const [isPublic, setIsPublic] = useState(false);
+  const [isPublic, setIsPublic] = useState('');
   const [link, setLink] = useState('');
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (title && details) {
       const publishedAt = format(new Date(), "'Date: 'yyyy-MM-dd' Time: 'HH:mm:ss");
-      onAddProject({ title, details, imageUrl, publishedAt, status, tags, isPublic, link });
+      const isPublicBoolean = isPublic.toLowerCase() === 'yes';
+      onAddProject({ title, details, imageUrl, publishedAt, status, tags, isPublic: isPublicBoolean, link });
       setTitle('');
       setDetails('');
       setImageUrl('');
       setStatus('');
       setTags('');
-      setIsPublic(false);
+      setIsPublic('');
       setLink('');
     }
   };
@@ -41,6 +42,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
   return (
     <section>
       <form id="create-project-form" onSubmit={handleSubmit}>
+      <button type="submit" id="submit-button">Create</button>
         <label htmlFor="name" id="name-label">Name for your project:</label><br />
         <input
           type="text"
@@ -84,11 +86,12 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
 
         <label htmlFor="public" id="public-label">Public:</label>
         <input
-          type="checkbox"
+          type="text"
           name="public"
           id="public"
-          checked={isPublic}
-          onChange={(e) => setIsPublic(e.target.checked)}
+          value={isPublic}
+          onChange={(e) => setIsPublic(e.target.value)}
+          placeholder='YES or NO'
         /><br />
 
         <label htmlFor="link" id="link-label">External Link:</label><br />
@@ -102,6 +105,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
         /><br />
 
         <label htmlFor="projectImageInput" id="image-label">Select an image:</label><br />
+        <button className='showall'>Show All Projects</button>
         <input
           type="file"
           id="projectImageInput"
@@ -117,8 +121,6 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
             }
           }}
         /><br />
-
-        <button type="submit" id="submit-button">Create</button>
       </form>
     </section>
   );

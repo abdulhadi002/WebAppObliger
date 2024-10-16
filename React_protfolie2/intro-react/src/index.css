@@ -48,7 +48,8 @@ nav {
 main {
   padding: 2rem 0;
 
-  h1, h2 {
+  h1,
+  h2 {
     padding: 1rem;
     font-size: 2rem;
     text-align: left;
@@ -67,7 +68,13 @@ main {
   }
 }
 
-#name, #description, #projectImageInput {
+#name,
+#description,
+#status,
+#tags,
+#link,
+#public,
+#projectImageInput {
   display: block;
   margin-bottom: 1rem;
   padding: 0.5rem;
@@ -76,7 +83,13 @@ main {
   border-radius: 4px;
 }
 
-#name-label, #description-label, #image-label {
+#name-label,
+#description-label,
+#status-label,
+#tags-label,
+#link-label,
+#public-label,
+#image-label {
   display: flex;
 }
 
