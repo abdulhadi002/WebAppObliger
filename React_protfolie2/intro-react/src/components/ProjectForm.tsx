@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
+import { ProjectProps } from './Project';
 
 type ProjectFormProps = {
-  onAddProject: (project: {
-    title: string;
-    details: string;
-    imageUrl: string;
-    publishedAt: string;
-    status: string;
-    tags: string;
-    isPublic: boolean;
-    link: string;
-  }) => void;
+  onAddProject: (project: ProjectProps) => void;
 };
 
 const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
@@ -20,21 +12,22 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
   const [imageUrl, setImageUrl] = useState('');
   const [status, setStatus] = useState('');
   const [tags, setTags] = useState('');
-  const [isPublic, setIsPublic] = useState('');
+  const [isPublic, setIsPublic] = useState(false);
   const [link, setLink] = useState('');
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (title && details) {
       const publishedAt = format(new Date(), "'Date: 'yyyy-MM-dd' Time: 'HH:mm:ss");
-      const isPublicBoolean = isPublic.toLowerCase() === 'yes';
-      onAddProject({ title, details, imageUrl, publishedAt, status, tags, isPublic: isPublicBoolean, link });
+      const tagsArray = tags.split(',').map(tag => tag.trim());
+      onAddProject({ title, details, imageUrl, publishedAt, status, tags: tagsArray, isPublic, link });
+
       setTitle('');
       setDetails('');
       setImageUrl('');
       setStatus('');
       setTags('');
-      setIsPublic('');
+      setIsPublic(false);
       setLink('');
     }
   };
@@ -42,7 +35,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
   return (
     <section>
       <form id="create-project-form" onSubmit={handleSubmit}>
-      <button type="submit" id="submit-button">Create</button>
+        <button type="submit" id="submit-button">Create</button>
         <label htmlFor="name" id="name-label">Name for your project:</label><br />
         <input
           type="text"
@@ -86,12 +79,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
 
         <label htmlFor="public" id="public-label">Public:</label>
         <input
-          type="text"
+          type="checkbox"
           name="public"
           id="public"
-          value={isPublic}
-          onChange={(e) => setIsPublic(e.target.value)}
-          placeholder='YES or NO'
+          checked={isPublic}
+          onChange={(e) => setIsPublic(e.target.checked)}
         /><br />
 
         <label htmlFor="link" id="link-label">External Link:</label><br />

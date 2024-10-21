@@ -1,16 +1,8 @@
 import React from 'react';
-import Project from './Project';
-import { format } from 'date-fns';
-
-type Project = {
-  title: string;
-  details: string;
-  imageUrl: string;
-  publishedAt: string;
-};
+import Project, { ProjectProps } from './Project';
 
 type ProjectListProps = {
-  projects: Project[];
+  projects: ProjectProps[];
 };
 
 const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
@@ -23,6 +15,10 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
           details={proj.details}
           imageUrl={proj.imageUrl}
           publishedAt={proj.publishedAt}
+          status={proj.status}
+          tags={proj.tags}
+          isPublic={proj.isPublic}
+          link={proj.link}
         />
       ))}
     </>
