@@ -1,15 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getProjects, addProject as addProjectService } from '../services/api';
-
-export type Project = {
-  title: string;
-  details: string;
-  imageUrl: string;
-  publishedAt: string;
-};
+import { ProjectProps } from '../components/Project';
 
 const useProjects = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<ProjectProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +21,7 @@ const useProjects = () => {
     }
   }, []);
 
-  const addProject = async (newProject: Project) => {
+  const addProject = async (newProject: ProjectProps) => {
     try {
       setLoading(true);
       await addProjectService(newProject);
