@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getProjects, addProject as addProjectService } from '../services/api';
+import { getProjects, addProject as addProjectService, deleteProject as deleteProjectService } from '../services/api';
 import { ProjectProps } from '../components/Project';
 
 const useProjects = () => {
@@ -13,9 +13,10 @@ const useProjects = () => {
       setError(null);
       const data = await getProjects();
       setProjects(data);
+      console.log("Fetched projects:", data);
     } catch (err) {
       setError('Failed to fetch projects');
-      console.error(err);
+      console.error("Error fetching projects:", err); 
     } finally {
       setLoading(false);
     }
@@ -26,9 +27,25 @@ const useProjects = () => {
       setLoading(true);
       await addProjectService(newProject);
       setProjects((prevProjects) => [...prevProjects, newProject]);
+      console.log("Added new project:", newProject); 
     } catch (err) {
       setError('Failed to add project');
-      console.error(err);
+      console.error("Error adding project:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteProject = async (id: number) => {
+    try {
+      setLoading(true);
+      console.log(`Attempting to delete project with ID: ${id}`); 
+      await deleteProjectService(id);
+      setProjects((prevProjects) => prevProjects.filter((project) => project.id !== id));
+      console.log(`Successfully deleted project with ID: ${id}`); 
+    } catch (err) {
+      setError(`Failed to delete project with ID: ${id}`);
+      console.error(`Error deleting project with ID ${id}:`, err); 
     } finally {
       setLoading(false);
     }
@@ -43,6 +60,7 @@ const useProjects = () => {
     loading,
     error,
     addProject,
+    deleteProject,
   };
 };
 

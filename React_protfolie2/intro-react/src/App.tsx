@@ -4,15 +4,18 @@ import ProjectForm from './components/ProjectForm';
 import useProjects from './hooks/useProjects';
 import Layout from './components/Layout';
 
-
 const App: React.FC = () => {
-  const { projects, addProject } = useProjects();
+  const { projects, addProject, deleteProject } = useProjects();
 
   return (
     <Layout>
       <ProjectForm onAddProject={addProject} />
+
       <section className="all-projects">
-        <ProjectList projects={projects} />
+        <ProjectList 
+          projects={projects} 
+          deleteProject={deleteProject}
+        />
       </section>
     </Layout>
   );

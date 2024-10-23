@@ -3,66 +3,88 @@ import { Hono } from "hono";
 import { readFile, writeFile } from "node:fs/promises";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { cors } from "hono/cors";
-import path from "node:path"; // Legger til path for bedre håndtering av filstier
 
 const app = new Hono();
-
-// Full path til JSON-filen for å unngå stirelaterte problemer
-const jsonFilePath = path.join(__dirname, "HonoServer", "ProjectInfo.json");
 
 app.use("/*", cors());
 
 app.use("/statics/*", serveStatic({ root: "./" }));
 
-// Hente alle prosjekter (GET /json)
 app.get("/json", async (c) => {
   try {
-    const data = await readFile(jsonFilePath, "utf-8");
-    const projects = JSON.parse(data).project;
+    const data = await readFile("./HonoServer/ProjectInfo.json", "utf-8");
+    const parsedData = JSON.parse(data);
 
-    return c.json(projects);
+    const projects = parsedData.project || [];
+    
+    return c.json({ success: true, project: projects });
   } catch (error) {
-    console.error("Failed to read projects:", error);
-    return c.text("Failed to fetch projects", 500);
+    console.error("Error reading project data:", error);
+    return c.json({ success: false, error: "Error reading data" }, 500);
   }
 });
 
-// Legge til nytt prosjekt (POST /json)
 app.post("/json", async (c) => {
   try {
-    // Hent data fra forespørselen
     const newProject = await c.req.json();
 
-    // Les eksisterende prosjekter fra JSON-filen
-    const data = await readFile(jsonFilePath, "utf-8");
+    const data = await readFile("./HonoServer/ProjectInfo.json", "utf-8");
     const parsedData = JSON.parse(data);
-
-    // Hvis prosjektdata ikke eksisterer, opprett en tom array
     const projects = parsedData.project || [];
 
-    // Generer ny ID og sett publiseringsdato
     newProject.id = projects.length ? projects[projects.length - 1].id + 1 : 1;
     newProject.publishedAt = new Date().toISOString();
 
-    // Default-verdier for manglende felt
     newProject.status = newProject.status || "inProgress";
     newProject.tags = newProject.tags || [];
     newProject.isPublic = newProject.isPublic !== undefined ? newProject.isPublic : false;
     newProject.link = newProject.link || "";
 
-    // Legg til det nye prosjektet i prosjektlisten
     projects.push(newProject);
 
-    // Lagre den oppdaterte listen tilbake til JSON-filen
-    await writeFile(jsonFilePath, JSON.stringify({ project: projects }, null, 2), "utf-8");
+    await writeFile("./HonoServer/ProjectInfo.json", JSON.stringify({ project: projects }, null, 2), "utf-8");
 
-    // Returner det nye prosjektet som ble lagret
     return c.json(newProject, 201);
   } catch (error) {
     console.error("Failed to save project:", error);
     return c.text("Failed to save project", 500);
   }
 });
+
+app.delete("/json/:id", async (c) => {
+  try {
+    const projectId = Number(c.req.param("id"));
+    console.log(`Attempting to delete project with ID: ${projectId}`);
+
+    if (isNaN(projectId)) {
+      console.log("Invalid project ID");
+      return c.text("Invalid project ID", 400);
+    }
+
+    const data = await readFile("./HonoServer/ProjectInfo.json", "utf-8");
+    const parsedData = JSON.parse(data);
+    let projects = parsedData.project || [];
+
+    const projectToDelete = projects.find((project) => project.id === projectId);
+
+    if (!projectToDelete) {
+      console.log("Project not found");
+      return c.text("Project not found", 404);
+    }
+
+    projects = projects.filter((project) => project.id !== projectId);
+
+    await writeFile("./HonoServer/ProjectInfo.json", JSON.stringify({ project: projects }, null, 2), "utf-8");
+
+    console.log(`Deleted project with ID: ${projectId}`);
+
+    return c.text("Project deleted", 200);
+  } catch (error) {
+    console.error("Failed to delete project:", error);
+    return c.text("Failed to delete project", 500);
+  }
+});
+
 
 const port = 4000;
 console.log(`Server is running on port ${port}`);

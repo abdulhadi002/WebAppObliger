@@ -20,7 +20,13 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
     if (title && details) {
       const publishedAt = format(new Date(), "'Date: 'yyyy-MM-dd' Time: 'HH:mm:ss");
       const tagsArray = tags.split(',').map(tag => tag.trim());
-      onAddProject({ title, details, imageUrl, publishedAt, status, tags: tagsArray, isPublic, link });
+      onAddProject({
+        title, details, imageUrl, publishedAt, status, tags: tagsArray, isPublic, link,
+        id: 0,
+        onRemove: function (): void {
+          throw new Error('Function not implemented.');
+        }
+      });
 
       setTitle('');
       setDetails('');

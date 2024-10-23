@@ -6,6 +6,9 @@
   --button-hover-text-color: white;
   --button-padding: 0.5rem 1rem;
   --button-border-radius: 4px;
+  --button-delete-bg-color: red;
+  --button-delete-hover-bg-color: darkred;
+  --button-delete-text-color: white;
 }
 
 #root {
@@ -125,6 +128,10 @@ button {
   }
 }
 
+#name-label {
+  padding-top: 1rem;
+}
+
 .showall {
   float: inline-end;
   margin-top: 1rem;
@@ -151,21 +158,27 @@ button {
 
   article {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     border-bottom: 1px solid #ddd;
     padding: 1rem 0;
+    flex-direction: column; /* Ensure vertical stacking */
+    text-align: left;
 
     img {
-      margin-right: 1rem;
+      margin-bottom: 1rem;
       width: 130px;
       height: 100px;
       object-fit: cover;
     }
 
-    p {
-      margin: 0;
-      flex-grow: 1;
-      color: black;
+    p,
+    h2 {
+      margin: 0.5rem 0;
+    }
+
+    .project-details {
+      display: flex;
+      flex-direction: column; /* Ensure project details are stacked vertically */
     }
 
     a {
@@ -183,7 +196,20 @@ button {
   h2 {
     font-size: 2rem;
     font-weight: bold;
-    text-align: left;
     margin-bottom: 1rem;
   }
+}
+
+.delete-button {
+  padding: var(--button-padding);
+  background-color: var(--button-delete-bg-color);
+  border: 1px solid var(--button-delete-bg-color);
+  color: var(--button-delete-text-color);
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: var(--button-delete-hover-bg-color);
+  color: var(--button-delete-text-color);
 }
