@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "cross-env DATABASE_URL=file:./HonoServer/src/db/database.db concurrently \"vite\" \"tsx HonoServer/server.ts\"",
+    "dev": "cross-env DATABASE_URL=file:./src/db/database.db FRONTEND_URL=http://localhost:5173 concurrently \"vite\" \"tsx HonoServer/server.ts\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",

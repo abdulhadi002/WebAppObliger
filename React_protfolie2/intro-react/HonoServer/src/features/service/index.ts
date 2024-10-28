@@ -3,6 +3,7 @@ import { projectRepository, type ProjectRepository } from "../repository";
 import type { CreateProjectDto, Project, UpdateProjectDto } from "../types";
 import { ResultHandler } from "../../lib/result";
 import { createProject } from "../mappers";
+import type { HonoEnv } from "../../../server";
 
 export const createProjectService = (
   projectRepository: ProjectRepository

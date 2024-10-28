@@ -29,8 +29,11 @@ export const makeApp = (
   app.use(
     "/*",
     cors({
-      origin: `${env.FRONTEND_URL}`,
-      credentials: true,
+      origin: env.FRONTEND_URL, // Pass på at dette er riktig URL, f.eks. "http://localhost:5173"
+      allowMethods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
+      allowHeaders: ["Content-Type"],
+      maxAge: 600,
+      credentials: true, // Sett til true hvis det trengs for autentisering
     })
   );
 

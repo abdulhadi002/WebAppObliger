@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { projectService, type ProjectService } from "../service";
 import { errorResponse } from "../../lib/error";
 
-import type { HonoEnv } from "../../app";
+import type { HonoEnv } from "../../../server";
 import type { Data } from "../../types";
 
 export const createProjectController = (projectService: ProjectService) => {
@@ -41,5 +41,3 @@ export const createProjectController = (projectService: ProjectService) => {
 
   return app;
 };
-
-export const projectController = createProjectController(projectService);
