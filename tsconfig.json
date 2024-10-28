@@ -19,5 +19,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src", "React_protfolie2/intro-react/HonoServer/src/config/db", "React_protfolie2/intro-react/HonoServer/src/config"]
 }
