@@ -1,42 +1,74 @@
+import 'dotenv/config';
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { readFile, writeFile } from "node:fs/promises";
-import { serveStatic } from "@hono/node-server/serve-static";
 import { cors } from "hono/cors";
+import { prettyJSON } from "hono/pretty-json";
 
-const app = new Hono();
+import db, { type DB } from "./src/db/db";
+import { setup } from "./src/db/setup";
+import { makeLogger, type Logger } from "./src/lib/logger";
+import { type ServerEnv, env } from "./src/lib/env";
+import { handleError } from "./src/lib/error";
+import { projectService } from "./src/features/service";
+import { createProjectController } from "./src/features/controller";
 
-app.use("/*", cors());
+export type ServiceContext = {
+  db: DB;
+  logger: Logger;
+};
 
-app.use("/statics/*", serveStatic({ root: "./" }));
+export type HonoEnv = {
+  Bindings: ServerEnv;
+  Variables: {
+    services: ServiceContext;
+  };
+};
 
-app.get("/json", async (c) => {
-  const data = await readFile("./HonoServer/ProjectInfo.json", "utf-8");
-  return c.json(JSON.parse(data));
-});
+const makeApp = async (
+  database: DB = db,
+  logger: Logger = makeLogger({ logLevel: env.LOG_LEVEL, env: env.NODE_ENV })
+) => {
+  await setup(database);
 
-app.post("/json", async (c) => {
-  try {
-    const newProject: Project = await c.req.json();
-    const data = await readFile("./HonoServer/ProjectInfo.json", "utf-8");
-    const projects = JSON.parse(data).project;
+  const app = new Hono<HonoEnv>();
 
-    newProject.id = projects.length ? projects[projects.length - 1].id + 1 : 1;
-    projects.push(newProject);
+  app.use(
+    "/*",
+    cors({
+      origin: env.FRONTEND_URL,
+      allowMethods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
+      allowHeaders: ["Content-Type"],
+      maxAge: 600,
+      credentials: true,
+    })
+  );
 
-    await writeFile("./HonoServer/ProjectInfo.json", JSON.stringify({ project: projects }, null, 2));
+  app.use(prettyJSON());
 
-    return c.json(newProject, 201);
-  } catch (error) {
-    return c.text("Failed to save project", 500);
-  }
-});
+  app.use("*", async (c, next) => {
+    c.set("services", {
+      logger,
+      db: database,
+    });
+    await next();
+  });
 
-const port = 4000;
+  const projectController = createProjectController(projectService);
+  app.route("/json", projectController);
 
-console.log(`It does WORK on port ${port}`);
+  app.onError((err, c) => handleError(err, c));
+
+  return app;
+};
+
+const app = await makeApp();
+
+const port = env.PORT || 4000;
+console.log(`Server is running on port ${port}`);
 
 serve({
   fetch: app.fetch,
-  port
+  port,
 });
+
+export default app;

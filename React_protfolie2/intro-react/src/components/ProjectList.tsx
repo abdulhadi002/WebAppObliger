@@ -1,26 +1,22 @@
 import React from 'react';
 import Project from './Project';
-
-type Project = {
-  title: string;
-  details: string;
-  imageUrl: string;
-};
+import { ProjectProps } from './Project';
 
 type ProjectListProps = {
-  projects: Project[];
+  projects: ProjectProps[];
+  deleteProject: (id: number) => void;
 };
 
-const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
+const ProjectList: React.FC<ProjectListProps> = ({ projects, deleteProject }) => {
   return (
     <>
-      {projects.map((proj, index) => (
-        <Project
-          key={index}
-          title={proj.title}
-          details={proj.details}
-          imageUrl={proj.imageUrl}
-        />
+      {projects.map((proj) => (
+        <div key={proj.id} className="project-item">
+          <Project 
+            {...proj} 
+            deleteProject={deleteProject}
+          />
+        </div>
       ))}
     </>
   );
