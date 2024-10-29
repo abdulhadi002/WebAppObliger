@@ -5,10 +5,10 @@ import ProjectForm from './components/ProjectForm';
 import useProjects from './hooks/useProjects';
 
 const PortfolioPage: React.FC = () => {
-  // Bruker custom hook for å håndtere prosjektene
+
   const { projects, addProject, deleteProject, loading, error } = useProjects();
 
-  // Legg til et nytt prosjekt
+
   const handleAddProject = (newProject: any) => {
     addProject(newProject);
   };
