@@ -2,31 +2,42 @@ import type { Entries } from "../../types";
 import type { DbProject, Project } from "../types";
 
 import { createId } from "../../lib/id";
+import { makeLogger } from "../../lib/logger";
 
 export const fromDb = (project: DbProject): Project => {
   return {
     id: project.id,
     title: project.title,
     details: project.details,
-    imageUrl: project.image_url,
+    image_url: project.image_url,
+    published_at: project.published_at, 
     status: project.status,
     tags: project.tags.split(","),
-    isPublic: project.is_public === 1,
+    is_public: project.is_public === 1,
     link: project.link,
   };
 };
 
+const logger = makeLogger({ env: "development", logLevel: "info" });
+
 export const createProject = (project: Partial<Project>): Project => {
-  return {
+  logger.info({ inputData: project });
+
+  const newProject = {
     id: project.id ?? createId(),
     title: project.title ?? "",
     details: project.details ?? "",
-    imageUrl: project.imageUrl ?? "",
+    image_url: project.image_url ?? "",
+    published_at: project.published_at ?? new Date().toISOString(),
     status: project.status ?? "inProgress",
     tags: project.tags ?? [],
-    isPublic: project.isPublic ?? false,
+    is_public: project.is_public ?? false,
     link: project.link ?? "",
   };
+
+  logger.info({ createdData: newProject });
+
+  return newProject;
 };
 
 export const toDb = (data: Project): DbProject => {
@@ -47,8 +58,11 @@ export const toDb = (data: Project): DbProject => {
       case "details":
         dbProject.details = value;
         break;
-      case "imageUrl":
+      case "image_url":
         dbProject.image_url = value;
+        break;
+      case "published_at": 
+        dbProject.published_at = value;
         break;
       case "status":
         dbProject.status = value;
@@ -56,7 +70,7 @@ export const toDb = (data: Project): DbProject => {
       case "tags":
         dbProject.tags = value?.join(",");
         break;
-      case "isPublic":
+      case "is_public":
         dbProject.is_public = value ? 1 : 0;
         break;
       case "link":

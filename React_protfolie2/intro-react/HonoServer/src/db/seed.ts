@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { DB } from "./db";
-import type { Project } from "../features/types/index";
+import type { Project } from "../../src/features/types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -17,7 +17,7 @@ export const seed = async (db: DB) => {
     };
 
     const insertProject = db.prepare(`
-      INSERT INTO projects (id, title, details, image_url, status, tags, is_public, link, published_at)
+      INSERT INTO projects (id, title, details, image_url, published_at, status, tags, is_public, link)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
@@ -27,12 +27,12 @@ export const seed = async (db: DB) => {
           project.id,
           project.title,
           project.details,
-          project.imageUrl,
+          project.image_url,
+          project.published_at || new Date().toISOString(), 
           project.status,
           project.tags.join(","),
-          project.isPublic ? 1 : 0,
-          project.link,
-          new Date().toISOString()
+          project.is_public ? 1 : 0,
+          project.link
         );
       }
     })();

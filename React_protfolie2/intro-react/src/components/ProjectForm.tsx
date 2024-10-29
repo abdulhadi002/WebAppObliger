@@ -9,19 +9,26 @@ type ProjectFormProps = {
 const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+  const [image_url, setImageUrl] = useState('');
   const [status, setStatus] = useState('');
   const [tags, setTags] = useState('');
-  const [isPublic, setIsPublic] = useState(false);
+  const [is_public, setIsPublic] = useState(false);
   const [link, setLink] = useState('');
+  const [published_at, setPublishedAt] = useState(format(new Date(), "'Date: 'yyyy-MM-dd' Time: 'HH:mm:ss"));
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (title && details) {
-      const publishedAt = format(new Date(), "'Date: 'yyyy-MM-dd' Time: 'HH:mm:ss");
       const tagsArray = tags.split(',').map(tag => tag.trim());
       onAddProject({
-        title, details, imageUrl, publishedAt, status, tags: tagsArray, isPublic, link,
+        title,
+        details,
+        image_url,
+        published_at,
+        status,
+        tags: tagsArray,
+        is_public,
+        link,
         id: 0,
         onRemove: function (): void {
           throw new Error('Function not implemented.');
@@ -35,6 +42,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
       setTags('');
       setIsPublic(false);
       setLink('');
+      setPublishedAt(format(new Date(), "'Date: 'yyyy-MM-dd' Time: 'HH:mm:ss")); 
     }
   };
 
@@ -88,7 +96,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onAddProject }) => {
           type="checkbox"
           name="public"
           id="public"
-          checked={isPublic}
+          checked={is_public}
           onChange={(e) => setIsPublic(e.target.checked)}
         /><br />
 

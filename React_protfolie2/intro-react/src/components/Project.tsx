@@ -4,16 +4,16 @@ export type ProjectProps = {
   id: number;
   title: string;
   details: string;
-  imageUrl: string;
-  publishedAt: string;
+  image_url: string;
+  published_at: string;
   status: string;
   tags: string[];
-  isPublic: boolean;
+  is_public: boolean;
   link: string;
   deleteProject: (id: number) => void;
 };
 
-const Project: React.FC<ProjectProps> = ({ id, title, details, imageUrl, publishedAt, status, tags, isPublic, link, deleteProject }) => {
+const Project: React.FC<ProjectProps> = ({ id, title, details, image_url, published_at, status, tags, is_public, link, deleteProject }) => {
 
   const handleDelete = () => {
     console.log(`Deleting project with ID: ${id}`);
@@ -22,14 +22,14 @@ const Project: React.FC<ProjectProps> = ({ id, title, details, imageUrl, publish
 
   return (
     <article>
-      <img src={imageUrl} alt="project" />
+      <img src={image_url} alt="project" />
       <h2><strong>Name:</strong> {title}</h2>
       <p><strong>Description:</strong> {details}</p>
-      <p><strong>publishedAt:</strong> {publishedAt}</p>
+      <p><strong>publishedAt:</strong> {published_at}</p>
       <section>
         <p><strong>Status:</strong> {status}</p>
         <p><strong>Tags:</strong> {tags.length > 0 ? tags.join(', ') : 'No tags available'}</p>
-        <p><strong>Public:</strong> {isPublic ? 'Yes' : 'No'}</p>
+        <p><strong>Public:</strong> {is_public ? 'Yes' : 'No'}</p>
         {link && (
           <p>
             <strong>External Link:</strong> <a href={link} target="_blank" rel="noopener noreferrer">{link}</a>

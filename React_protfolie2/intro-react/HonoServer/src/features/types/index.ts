@@ -2,10 +2,11 @@ export type Project = {
   id: string;
   title: string;
   details: string;
-  imageUrl: string;
+  image_url: string;
+  published_at: string;
   status: string;
   tags: string[];
-  isPublic: boolean;
+  is_public: boolean;
   link: string;
 };
 
@@ -14,6 +15,7 @@ export type DbProject = {
   title: string;
   details: string;
   image_url: string;
+  published_at: string;
   status: string;
   tags: string;
   is_public: number;
@@ -22,21 +24,19 @@ export type DbProject = {
 
 export type CreateProjectDto = Pick<
   Project,
-  "title" | "details" | "imageUrl" | "status" | "tags" | "isPublic" | "link"
+  "title" | "details" | "image_url" | "published_at" | "status" | "tags" | "is_public" | "link"
 >;
 
-export type UpdateProjectDto = Partial<
-  Pick<Project, "title" | "details" | "status" | "tags" | "isPublic" | "link">
->;
 
 export const projectFields: (keyof Project)[] = [
   "id",
   "title",
   "details",
-  "imageUrl",
+  "image_url",
+  "published_at",
   "status",
   "tags",
-  "isPublic",
+  "is_public",
   "link",
 ];
 

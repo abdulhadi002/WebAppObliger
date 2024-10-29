@@ -1,25 +1,26 @@
 {
-    "projects": [
-      {
-        "id": "1",
-        "title": "Prosjekt 1",
-        "details": "Detaljer om prosjekt 1",
-        "imageUrl": "https://example.com/image1.png",
-        "status": "completed",
-        "tags": ["tag1", "tag2"],
-        "isPublic": true,
-        "link": "https://example.com/prosjekt1"
-      },
-      {
-        "id": "2",
-        "title": "Prosjekt 2",
-        "details": "Detaljer om prosjekt 2",
-        "imageUrl": "https://example.com/image2.png",
-        "status": "inProgress",
-        "tags": ["tag3", "tag4"],
-        "isPublic": false,
-        "link": "https://example.com/prosjekt2"
-      }
-    ]
-  }
-  
+  "projects": [
+    {
+      "id": 1,
+      "title": "Prosjekt 1",
+      "details": "Detaljer om prosjekt 1",
+      "image_url": "https://example.com/image1.png",
+      "published_at": "2024-10-29T10:00:00Z",
+      "status": "completed",
+      "tags": ["tag1", "tag2"],
+      "is_public": true,
+      "link": "https://example.com/prosjekt1"
+    },
+    {
+      "id": 2,
+      "title": "Prosjekt 2",
+      "details": "Detaljer om prosjekt 2",
+      "image_url": "https://example.com/image2.png",
+      "published_at": "2024-10-29T10:00:00Z",
+      "status": "inProgress",
+      "tags": ["tag3", "tag4"],
+      "is_public": false,
+      "link": "https://example.com/prosjekt2"
+    }
+  ]
+}

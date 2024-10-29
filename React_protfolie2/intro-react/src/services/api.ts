@@ -1,6 +1,8 @@
+import { ProjectProps } from "../components/Project"
+
 const BASE_URL = 'http://localhost:4000';
 
-export const getProjects = async () => {
+export const getProjects = async (): Promise<ProjectProps[]> => {
   try {
     const response = await fetch(`${BASE_URL}/json`, {
       method: 'GET',
@@ -14,18 +16,17 @@ export const getProjects = async () => {
     }
 
     const result = await response.json();
-
     const projects = result.project || result.data;
 
-    return projects.map((proj: any) => ({
+    return projects.map((proj: ProjectProps) => ({
       id: proj.id,
-      title: proj.project_name,
-      details: proj.description,
-      imageUrl: proj.image_src || 'https://via.placeholder.com/100x100',
-      publishedAt: proj.publishedAt,
+      title: proj.title,
+      details: proj.details,
+      image_url: proj.image_url || 'https://via.placeholder.com/100x100',
+      published_at: proj.published_at,
       status: proj.status || 'inProgress',
       tags: proj.tags || [],
-      isPublic: proj.isPublic || false,
+      is_public: proj.is_public || false,
       link: proj.link || '',
     }));
   } catch (error) {
@@ -34,7 +35,7 @@ export const getProjects = async () => {
   }
 };
 
-export const addProject = async (newProject: any) => {
+export const addProject = async (newProject: ProjectProps) => {
   try {
     const response = await fetch(`${BASE_URL}/json`, {
       method: 'POST',
@@ -42,17 +43,17 @@ export const addProject = async (newProject: any) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        project_name: newProject.title,
-        description: newProject.details,
-        image_src: newProject.imageUrl,
-        publishedAt: newProject.publishedAt,
+        title: newProject.title,
+        details: newProject.details,
+        image_url: newProject.image_url,
+        published_at: newProject.published_at,
         status: newProject.status || 'inProgress',
         tags: newProject.tags || [],
-        isPublic: newProject.isPublic || false,
+        is_public: newProject.is_public || false,
         link: newProject.link || '',
       }),
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -86,5 +87,3 @@ export const deleteProject = async (id: number) => {
     throw error;
   }
 };
-
-
