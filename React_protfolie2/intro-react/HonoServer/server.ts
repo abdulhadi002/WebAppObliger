@@ -54,7 +54,7 @@ const makeApp = async (
   });
 
   const projectController = createProjectController(projectService);
-  app.route("/v1/projects", projectController);
+  app.route("/json", projectController);
 
   app.onError((err, c) => handleError(err, c));
 
